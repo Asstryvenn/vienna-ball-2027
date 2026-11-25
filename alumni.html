@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vienna Ball для выпускников</title>
+  <meta name="description" content="Благотворительный Венский бал зимой 2027 в Астане. Бал студсовета НИШ ЕМН Астана-Нура. Выпускники могут поддержать бал пожертвованием.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="magic.css">
+</head>
+<body>
+
+<canvas class="dust" id="dust" aria-hidden="true"></canvas>
+
+<header class="top" id="top">
+  <a class="mark" href="index.html" aria-label="Vienna Ball, на главную">Vienna Ball</a>
+  <nav aria-label="Разделы">
+    <a href="index.html">Главная</a>
+    <a href="#about">О бале</a>
+    <a href="#card">Программа</a>
+    <a href="#recap">Как это было</a>
+    <a href="#donate">Выпускникам</a>
+    <a href="#partners">Партнёрам</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="rays" aria-hidden="true"></div>
+    <canvas class="glints" id="glints" aria-hidden="true"></canvas>
+    <div class="hero-text">
+      <p class="date">Зима 2027, Астана</p>
+      <h1>Vienna Ball <span class="yr">’27</span></h1>
+      <p class="lede">Благотворительный бал студсовета НИШ ЕМН Астана-Нура. Вальс, живая музыка и вечер, ради которого мы готовимся с осени.</p>
+      <p class="actions">
+        <a class="btn" href="#donate">Поддержать бал</a>
+        <a class="textlink" href="#partners">Стать партнёром</a>
+      </p>
+    </div>
+    <figure class="hero-photo">
+      <img src="img/waltz-hero.jpg" alt="Пара танцует вальс в зале, девушка в белом платье поднимает руки" width="960" height="900">
+      <figcaption>Венский бал 2025. Фото: @kkuksishka, @amgsbba</figcaption>
+    </figure>
+  </section>
+
+  <section class="about" id="about">
+    <h2 class="rv">Бал, который школьники делают сами</h2>
+    <div class="prose rv">
+      <p>Венский бал проводит студенческий совет НИШ ЕМН района Нура. Мы сами пишем сценарий, ищем артистов, репетируем вальс и собираем деньги. В зале собираются около 400 человек: ученики, выпускники, родители и учителя.</p>
+      <p>Деньги от билетов и пожертвований идут на благотворительность. Сколько собрали и куда ушло, мы показываем в отчёте в течение 10 дней после бала.</p>
+      <p>Предыдущие балы прошли в Hilton Astana, Marriott и Wyndham Garden. В 2027 году планируем пятизвёздочный отель Астаны, площадку объявим позже.</p>
+    </div>
+  </section>
+
+  <section class="velvet" id="card">
+    <div class="card-wrap rv">
+      <div class="card-intro">
+        <h2>Программа вечера</h2>
+        <p>На балах раньше гости записывали танцы в маленькую книжечку. Наша программа такая же: порядок вечера, как мы его задумали.</p>
+      </div>
+      <ol class="dance-card">
+        <li><b>Вальс открытия</b><span>Пары выходят в зал, и вечер начинается.</span></li>
+        <li><b>Гость вечера</b><span>Выступает приглашённый артист.</span></li>
+        <li><b>Школьные номера</b><span>Вокал, скрипка, танец. На сцене наши ученики.</span></li>
+        <li><b>Игры и призы</b><span>Интерактивы с сертификатами от партнёров.</span></li>
+        <li><b>Фуршет</b><span>Перерыв, чтобы отдохнуть и поговорить.</span></li>
+        <li><b>Mister &amp; Miss Vienna</b><span>Голосуют все гости, корону получает одна пара.</span></li>
+        <li><b>Дискотека</b><span>Последние часы вечера без сценария.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="recap" id="recap">
+    <h2 class="rv">Как это было в 2025</h2>
+    <div class="collage">
+      <figure class="c-a"><img src="img/waltz-night.jpg" alt="Девушка в белом платье во время вальса, за ней свет прожекторов" loading="lazy"><figcaption>Вальс</figcaption></figure>
+      <figure class="c-b"><img src="img/performance.jpg" alt="Ученики в белых футболках на сцене, руки в стороны" loading="lazy"><figcaption>Номер учеников</figcaption></figure>
+      <figure class="c-c"><img src="img/concert.jpg" alt="Музыкант на сцене в синем свете" loading="lazy"><figcaption>Хедлайнер</figcaption></figure>
+      <figure class="c-d"><img src="img/violin.jpg" alt="Девушка играет на скрипке и поёт перед гостями" loading="lazy"><figcaption>Скрипка</figcaption></figure>
+      <figure class="c-e"><img src="img/king-queen.jpg" alt="Пара на сцене с лентами и короной" loading="lazy"><figcaption>Король и королева бала</figcaption></figure>
+      <figure class="c-f"><img src="img/vocal.jpg" alt="Девушка поёт в красном свете" loading="lazy"><figcaption>Вокал</figcaption></figure>
+      <figure class="c-g"><img src="img/photobooth.jpg" alt="Фотографии гостей из фотобудки на золотом фоне" loading="lazy"><figcaption>Фотобудка</figcaption></figure>
+    </div>
+    <p class="credits">Фото: @kkuksishka, @amgsbba. Фотобудка: @fotobudka.krg. Танцевальное выступление: @nova.dannce.</p>
+  </section>
+
+  <section class="velvet donate" id="donate">
+    <div class="pledge rv">
+      <h2>Выпускникам: поддержать бал</h2>
+      <p>Вы уже прошли этот путь. Если хотите помочь тем, кто сегодня организует бал, и тем, ради кого он проходит, оставьте пожертвование.</p>
+      <p>Пожертвования выпускников идут в благотворительный сбор бала. Отчёт о собранных деньгах мы публикуем в течение 10 дней после мероприятия.</p>
+      <div class="meter" id="fund-meter" role="progressbar" aria-label="Собрано из цели 4 000 000 тенге" aria-valuemin="0" aria-valuemax="4000000" aria-valuenow="0">
+        <div class="meter-fill" id="fund-fill"><span class="meter-glow"></span></div>
+      </div>
+      <p class="fund-figures" id="fund-figs" hidden><b id="fund-raised">0</b> ₸ <span>из 4 000 000 ₸</span></p>
+      <p class="small fund-note" id="fund-note">Сбор откроется ближе к балу.</p>
+      <p class="actions">
+        <a class="btn" id="donate-btn" href="#donate" target="_blank" rel="noopener">Перейти к форме</a>
+      </p>
+      <p class="small" id="donate-note">Форма откроется в Google Forms в новой вкладке.</p>
+    </div>
+  </section>
+
+  <section class="partners" id="partners">
+    <h2>Партнёрам</h2>
+    <div class="prose">
+      <p>Если ваша компания хочет поддержать бал деньгами, призами, продукцией или услугами, напишите нам в Instagram: <a href="https://www.instagram.com/nisast.studentcouncil/" target="_blank" rel="noopener">@nisast.studentcouncil</a>. Расскажем, что получает партнёр, и пришлём презентацию.</p>
+      <p>На сцене наших балов выступали Darkhan Juzz, Bonapart, Dudeonthe guitar, Plecto и Aikyn Tolepbergen.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Студенческий совет НИШ ЕМН Астана-Нура</p>
+  <p class="foot-links"><a href="privacy.html">Политика конфиденциальности</a><a href="https://www.instagram.com/nisast.studentcouncil/" target="_blank" rel="noopener noreferrer">@nisast.studentcouncil</a></p>
+</footer>
+
+<script src="fairy.js"></script>
+<script src="script.js"></script>
+<script src="magic.js"></script>
+</body>
+</html>

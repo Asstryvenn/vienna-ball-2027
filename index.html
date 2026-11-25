@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vienna Ball 2027</title>
+  <meta name="description" content="Благотворительный Венский бал студсовета НИШ ЕМН Астана-Нура. История балов, сбор 2027 года, билеты для учеников, партнёры и пожертвования выпускников.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pinyon+Script&family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="magic.css">
+</head>
+<body>
+
+<canvas class="dust" id="dust" aria-hidden="true"></canvas>
+
+<header class="bar">
+  <a class="mark" href="#top" aria-label="Vienna Ball, в начало страницы">Vienna Ball</a>
+  <nav aria-label="Разделы">
+    <a href="#history">История</a>
+    <a href="#artists">Артисты</a>
+    <a href="#fund">Сбор</a>
+    <a href="#tickets">Билеты</a>
+    <a href="#partners">Партнёры</a>
+    <a href="alumni.html">Выпускникам</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="rays" aria-hidden="true"></div>
+    <canvas class="glints" id="glints" aria-hidden="true"></canvas>
+    <div class="spot" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="beat"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>Зима 2027, Астана</p>
+        <h1 class="title">
+          <span class="ink shine">Vienna Ball</span>
+          <svg class="swash" viewBox="0 0 520 60" aria-hidden="true" focusable="false"><path d="M6 40 C 90 8, 170 58, 262 30 S 430 4, 514 34"/></svg>
+        </h1>
+        <p class="lede">Ежегодный благотворительный бал студсовета НИШ ЕМН Астана-Нура. Вальс, живая музыка и один вечер, ради которого школа готовится всю зиму.</p>
+        <p class="soon-line">Дату и площадку объявим скоро</p>
+        <p class="actions">
+          <a class="btn solid" href="#tickets">Билеты: скоро</a>
+          <a class="textlink" href="#history">История бала</a>
+        </p>
+      </div>
+      <figure class="hero-photo">
+        <div class="frame"><img src="img/waltz-hero.jpg" alt="Пара танцует вальс, девушка в белом платье поднимает руки" width="800" height="800"></div>
+        <figcaption>Венский бал 2025, Hilton Astana</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="intro">
+    <p class="rv tale">В одной школе Астаны есть вечер, которого ждут весь год. Зимой её коридоры превращаются в бальный зал: девушки выбирают платья, юноши учатся вести в вальсе, а студсовет до поздней ночи ищет музыку, свет и добрых волшебников, которые помогут. И когда звучат первые три такта, сказка становится настоящей: каждый билет и каждое пожертвование превращаются в чью-то помощь.</p>
+    <svg class="flourish" viewBox="0 0 300 40" aria-hidden="true" focusable="false"><path d="M10 20 C 60 0, 100 40, 150 20 S 240 0, 290 20 M150 20 m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0"/></svg>
+  </section>
+
+  <section class="history" id="history">
+    <div class="history-head rv">
+      <h2>Шесть балов</h2>
+      <p>Каждый год мы находим зал больше и готовим вечер лучше, чем в прошлый раз.</p>
+    </div>
+    <ol class="timeline" id="timeline">
+      <li class="tl"><div class="tl-card"><span class="num">1</span><h3>MNU</h3><p class="when">Первый бал</p><p>С него всё началось: первый вальс студсовета и первый благотворительный сбор.</p></div></li>
+      <li class="tl"><div class="tl-card"><span class="num">2</span><h3>Marriott</h3><p class="when">Второй бал</p><p>Собрали 228 000 ₸ на благотворительность.</p></div></li>
+      <li class="tl"><div class="tl-card"><span class="num">3</span><h3>Wyndham Garden</h3><p class="when">Третий бал</p><p>Собрали 1 356 790 ₸.</p></div></li>
+      <li class="tl"><div class="tl-card"><span class="num">4</span><h3>Hilton Astana</h3><p class="when">18 января 2025</p><p>Собрали 1 750 000 ₸ для Союза родителей особенных детей. Хедлайнер вечера: Bonapart.</p></div></li>
+      <li class="tl"><div class="tl-card"><span class="num">5</span><h3>Rixos President Astana</h3><p class="when">1 марта 2026, Aurora Ball</p><p>Бал, вдохновлённый рассветом. Хедлайнер вечера: Plecto.</p></div></li>
+      <li class="tl next"><div class="tl-card"><span class="num">6</span><h3>Vienna Ball 2027</h3><p class="when">Зима 2027</p><p>Пятизвёздочный отель Астаны. Дату и площадку объявим в Instagram студсовета.</p></div></li>
+    </ol>
+    <p class="total rv">За второй, третий и четвёртый балы собрано <b><span id="total" data-to="3334790">3 334 790</span> ₸</b></p>
+  </section>
+
+  <section class="stars" id="artists">
+    <div class="stars-head rv">
+      <h2>Звёзды наших балов</h2>
+      <p>Те, кто выходил на нашу сцену. Свет прожекторов всё ещё ищет их.</p>
+    </div>
+    <ul class="stage" aria-label="Артисты прошлых балов">
+      <li class="artist"><span class="cone" aria-hidden="true"></span><span class="floor" aria-hidden="true"></span><img class="cutout wide" src="img/artists/bonapart.png" alt="Bonapart с гитарой" loading="lazy"><div class="who"><p class="a-name">Bonapart</p><p class="a-when">Хедлайнер бала 2025</p></div></li>
+      <li class="artist"><span class="cone" aria-hidden="true"></span><span class="floor" aria-hidden="true"></span><img class="cutout wide" src="img/artists/plecto.png" alt="Plecto" loading="lazy"><div class="who"><p class="a-name">Plecto</p><p class="a-when">Хедлайнер Aurora Ball 2026</p></div></li>
+      <li class="artist"><span class="cone" aria-hidden="true"></span><span class="floor" aria-hidden="true"></span><img class="cutout" src="img/artists/aikyn.png" alt="Aikyn Tolepbergen" loading="lazy"><div class="who"><p class="a-name">Aikyn Tolepbergen</p><p class="a-when">Хедлайнер прошлых лет</p></div></li>
+      <li class="artist"><span class="cone" aria-hidden="true"></span><span class="floor" aria-hidden="true"></span><img class="cutout" src="img/artists/dudeontheguitar.png" alt="Dudeonthe guitar" loading="lazy"><div class="who"><p class="a-name">Dudeonthe guitar</p><p class="a-when">Хедлайнер прошлых лет</p></div></li>
+      <li class="artist"><span class="cone" aria-hidden="true"></span><span class="floor" aria-hidden="true"></span><img class="cutout" src="img/artists/doss-normat.png" alt="Doss Normat с гитарой у микрофона" loading="lazy"><div class="who"><p class="a-name">Doss Normat</p><p class="a-when">Гость бала 2025</p></div></li>
+      <li class="artist"><span class="cone" aria-hidden="true"></span><span class="floor" aria-hidden="true"></span><div class="who"><p class="a-name">Nova Dance</p><p class="a-when">Танцевальная группа, 2025 и 2026</p></div></li>
+      <li class="artist"><span class="cone" aria-hidden="true"></span><span class="floor" aria-hidden="true"></span><img class="cutout" src="img/artists/darkhan-juzz.png" alt="Darkhan Juzz с гитарой на плече" loading="lazy"><div class="who"><p class="a-name">Darkhan Juzz</p><p class="a-when">Хедлайнер прошлых лет. Светлая память</p></div></li>
+    </ul>
+  </section>
+
+  <section class="gallery" id="gallery">
+    <h2 class="rv">Как это было</h2>
+    <div class="strip" tabindex="0" aria-label="Фотографии с Венского бала 2025">
+      <div class="track">
+        <figure><img src="img/waltz-night.jpg" alt="Девушка в белом платье во время вальса"><figcaption>Вальс</figcaption></figure>
+        <figure><img src="img/king-queen.jpg" alt="Король и королева бала на сцене с лентами"><figcaption>Король и королева</figcaption></figure>
+        <figure><img src="img/performance.jpg" alt="Ученики танцуют на сцене в белых футболках"><figcaption>Номер учеников</figcaption></figure>
+        <figure><img src="img/violin.jpg" alt="Девушка поёт и играет на скрипке"><figcaption>Скрипка</figcaption></figure>
+        <figure><img src="img/concert.jpg" alt="Музыкант на сцене в синем свете"><figcaption>Хедлайнер</figcaption></figure>
+        <figure><img src="img/vocal.jpg" alt="Девушка поёт в красном свете"><figcaption>Вокал</figcaption></figure>
+        <figure><img src="img/photobooth.jpg" alt="Снимки гостей из фотобудки"><figcaption>Фотобудка</figcaption></figure>
+      </div>
+    </div>
+    <p class="credits">Фото с бала 2025: @kkuksishka, @amgsbba. Фотобудка: @fotobudka.krg.</p>
+  </section>
+
+  <section class="fund" id="fund">
+    <div class="fund-inner rv">
+      <h2>Сбор 2027</h2>
+      <p>Цель этого бала: 4 000 000 ₸. Пожертвования выпускников и взносы партнёров идут в благотворительный сбор, отчёт публикуем в течение 10 дней после бала.</p>
+      <div class="meter" id="fund-meter" role="progressbar" aria-label="Собрано из цели 4 000 000 тенге" aria-valuemin="0" aria-valuemax="4000000" aria-valuenow="0">
+        <div class="meter-fill" id="fund-fill"><span class="meter-glow"></span></div>
+      </div>
+      <p class="fund-figures" id="fund-figs" hidden><b id="fund-raised">0</b> ₸ <span>из 4 000 000 ₸</span></p>
+      <p class="fund-note" id="fund-note">Сбор откроется вместе с продажей билетов.</p>
+      <p class="actions">
+        <a class="btn light" href="alumni.html">Пожертвовать как выпускник</a>
+        <a class="btn light" href="#partners">Стать партнёром</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="partners" id="partners">
+    <div class="partners-copy rv">
+      <h2>Партнёры 2027</h2>
+      <p>Партнёров этого бала мы покажем здесь, как только подпишем договорённости. Если ваша компания хочет поддержать бал деньгами, призами, продукцией или услугами, напишите нам.</p>
+      <p class="actions"><a class="btn" href="https://www.instagram.com/nisast.studentcouncil/" target="_blank" rel="noopener noreferrer">Стать партнёром</a></p>
+    </div>
+    <ul class="slots" aria-label="Места для партнёров">
+      <li>Генеральный партнёр</li>
+      <li>Партнёр по нарядам</li>
+      <li>Партнёр по еде и напиткам</li>
+      <li>Призовой партнёр</li>
+    </ul>
+    <p class="past rv">Нас уже поддерживали: G-Life, Fotobudka.krg, Nova Dance, Fashion Provocation, NEOS Fitness, Champion Fitness, StepByStep.</p>
+  </section>
+
+  <section class="tickets" id="tickets">
+    <div class="tickets-copy rv">
+      <h2>Билеты</h2>
+      <p>Регистрация и продажа билетов для учеников НИШ ЕМН Астана-Нура скоро откроются. После регистрации и оплаты вы получите электронный билет.</p>
+      <p>Анонс будет в Instagram студсовета.</p>
+    </div>
+    <div class="ticket" id="ticket">
+      <div class="t-main">
+        <p class="t-name">Vienna Ball</p>
+        <dl class="t-rows">
+          <div><dt>Дата</dt><dd>Объявим скоро</dd></div>
+          <div><dt>Город</dt><dd>Астана</dd></div>
+          <div><dt>Для кого</dt><dd>Ученики НИШ ЕМН Астана-Нура</dd></div>
+        </dl>
+        <a class="btn solid dark" id="ticket-btn" href="#tickets" target="_blank" rel="noopener noreferrer">Зарегистрироваться</a>
+        <p class="t-note" id="ticket-note"></p>
+      </div>
+      <div class="t-stub" aria-hidden="true"><span>Вход на одного</span></div>
+    </div>
+  </section>
+
+  <section class="alumni">
+    <div class="rv">
+      <h2 class="shine">Выпускникам</h2>
+      <p>Вы тоже когда-то танцевали этот вальс. Если хотите помочь тем, кто готовит бал сегодня, оставьте пожертвование.</p>
+      <p class="actions"><a class="btn" href="alumni.html">Поддержать бал</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Студенческий совет НИШ ЕМН Астана-Нура</p>
+  <p class="foot-links"><a href="privacy.html">Политика конфиденциальности</a><a href="https://www.instagram.com/nisast.studentcouncil/" target="_blank" rel="noopener noreferrer">@nisast.studentcouncil</a></p>
+</footer>
+
+<script src="main.js"></script>
+<script src="magic.js"></script>
+</body>
+</html>
