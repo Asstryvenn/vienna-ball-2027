@@ -342,4 +342,46 @@ var BALL_DATE = "";
       }
     });
   }
+
+  /* ---------- первый экран живой: слои двигаются за мышкой и при прокрутке колёсиком ---------- */
+  if (hero && !reduce) {
+    var fineP = window.matchMedia && window.matchMedia("(pointer: fine)").matches;
+    var Q = function (sel) { return hero.querySelector(sel); };
+    // [элемент, сдвиг за мышкой x, y, сдвиг при прокрутке по y, поворот, рост, исчезание]
+    var layers = [
+      [Q(".title") || Q("h1"), -56, -32, 170, 0, 0.1, 1.3],
+      [Q(".beat") || Q(".date"), -30, -16, 120, 0, 0, 1.6],
+      [Q(".lede"), -24, -14, 90, 0, 0, 1.5],
+      [Q(".soon-line"), -18, -10, 70, 0, 0, 1.5],
+      [Q(".hero-photo"), 48, 34, -90, 5, 0.08, 0],
+      [Q(".chand"), 30, 12, 150, 0, 0, 0],
+      [Q(".musicbox"), -70, -40, 0, 0, 0, 0],
+      [Q(".glints"), 80, 50, -60, 0, 0, 0]
+    ].filter(function (l) { return l[0]; });
+    var rays = Q(".rays");
+    var tx = 0, ty = 0, cx = 0, cy = 0, sp = 0, cp = 0, live = true;
+    if (fineP) {
+      hero.addEventListener("pointermove", function (e) {
+        var r = hero.getBoundingClientRect();
+        tx = (e.clientX - r.left) / r.width - 0.5; ty = (e.clientY - r.top) / r.height - 0.5;
+      });
+      hero.addEventListener("pointerleave", function () { tx = 0; ty = 0; });
+    }
+    addEventListener("scroll", function () { sp = Math.max(0, Math.min(1, scrollY / Math.max(1, hero.offsetHeight))); }, { passive: true });
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { live = es[0].isIntersecting; }).observe(hero);
+    (function heroLoop() {
+      if (live) {
+        cx += (tx - cx) * 0.07; cy += (ty - cy) * 0.07; cp += (sp - cp) * 0.12;
+        layers.forEach(function (l) {
+          var e = l[0];
+          e.style.translate = (cx * l[1]).toFixed(1) + "px " + (cy * l[2] + cp * l[3]).toFixed(1) + "px";
+          if (l[4]) e.style.rotate = (cp * l[4] + cx * 3).toFixed(2) + "deg";
+          if (l[5]) e.style.scale = (1 + cp * l[5]).toFixed(3);
+          if (l[6]) e.style.opacity = Math.max(0, 1 - cp * l[6]).toFixed(3);
+        });
+        if (rays) rays.style.scale = (1 + cp * 0.6 + Math.abs(cx) * 0.06).toFixed(3);
+      }
+      requestAnimationFrame(heroLoop);
+    })();
+  }
 })();
