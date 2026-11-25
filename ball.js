@@ -6,7 +6,7 @@
 var BALL_DATE = "";
 
 // Своя мелодия для кнопки музыки. Если файла нет, играет вальс из музыкальной шкатулки.
-var MUSIC_FILE = "music/theme.mp3";
+var MUSIC_FILE = "music/theme.m4a";
 
 (function () {
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -361,6 +361,9 @@ var MUSIC_FILE = "music/theme.mp3";
         beatRaf = requestAnimationFrame(tick);
       })();
     };
+    var makeAudio = function () { if (!audio && fileOk) { audio = new Audio(); audio.preload = "auto"; audio.loop = true; audio.src = MUSIC_FILE; } };
+    btn.addEventListener("pointerenter", makeAudio);
+    btn.addEventListener("focus", makeAudio);
     btn.addEventListener("click", function () {
       ensureCtx();
       playing = !playing;
@@ -369,8 +372,8 @@ var MUSIC_FILE = "music/theme.mp3";
       btn.classList.toggle("on", playing);
       ctx.resume();
       if (fileOk) {
-        if (!audio) {
-          audio = new Audio(MUSIC_FILE); audio.loop = true; audio.crossOrigin = "anonymous";
+        if (!audio) makeAudio();
+        if (!analyser) {
           var src = ctx.createMediaElementSource(audio);
           analyser = ctx.createAnalyser(); analyser.fftSize = 512;
           src.connect(analyser); analyser.connect(ctx.destination);
