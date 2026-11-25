@@ -148,11 +148,12 @@
       if (!document.hidden) {
         var dy = scrollY - lastY; lastY = scrollY; wind += (dy * 0.04 - wind) * 0.1;
         sc.clearRect(0, 0, sw, sh);
+        var bt = window.__beat, pulse = bt ? Math.exp(-(performance.now() - bt.t) / 170) * bt.s : 0;
         for (var i = 0; i < flakes.length; i++) {
           var f = flakes[i]; f.w += f.ws; f.y += f.s - wind * f.r * 0.3; f.x += Math.sin(f.w) * 0.4;
           if (f.y > sh + 10) flakes[i] = mkFlake(false);
           if (f.y < -20) f.y = sh + 5;
-          sc.beginPath(); sc.fillStyle = "rgba(255,255,255," + f.o + ")"; sc.arc(f.x, f.y, f.r, 0, 6.2832); sc.fill();
+          sc.beginPath(); sc.fillStyle = "rgba(255,255,255," + Math.min(1, f.o + pulse * 0.4) + ")"; sc.arc(f.x, f.y - pulse * f.r * 2, f.r * (1 + pulse * 0.9), 0, 6.2832); sc.fill();
         }
       }
       requestAnimationFrame(snowLoop);
