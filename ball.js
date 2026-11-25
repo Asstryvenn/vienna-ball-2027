@@ -343,12 +343,16 @@ var MUSIC_FILE = "music/theme.m4a";
     };
     var ensureCtx = function () { if (!ctx) { ctx = new AC(); master = ctx.createGain(); master.gain.value = 0.55; master.connect(ctx.destination); } };
     // своя мелодия: если на сайте лежит файл MUSIC_FILE, кнопка играет его, иначе вальс из шкатулки
-    var audio = null, analyser = null, fileOk = false, beatRaf = 0;
+    var fileOk = false, bufP = null, decoded = null, srcNode = null, gainNode = null, analyser = null, startedAt = 0, offset = 0, beatRaf = 0;
+    var lbl = btn.querySelector(".lbl");
     fetch(MUSIC_FILE, { method: "HEAD", cache: "no-store" }).then(function (r) {
       if (!r.ok) return;
       fileOk = true;
-      btn.querySelector(".lbl").textContent = "Включить музыку";
+      if (!playing) lbl.textContent = "Включить музыку";
     }).catch(function () {});
+    var preload = function () { if (fileOk && !bufP) bufP = fetch(MUSIC_FILE).then(function (r) { return r.arrayBuffer(); }); };
+    btn.addEventListener("pointerenter", preload);
+    btn.addEventListener("focus", preload);
     var listen = function () {
       var data = new Uint8Array(analyser.frequencyBinCount), avg = 0, last = 0;
       (function tick() {
@@ -361,27 +365,52 @@ var MUSIC_FILE = "music/theme.m4a";
         beatRaf = requestAnimationFrame(tick);
       })();
     };
-    var makeAudio = function () { if (!audio && fileOk) { audio = new Audio(); audio.preload = "auto"; audio.loop = true; audio.src = MUSIC_FILE; } };
-    btn.addEventListener("pointerenter", makeAudio);
-    btn.addEventListener("focus", makeAudio);
+    var playFile = function () {
+      preload();
+      if (!gainNode) {
+        gainNode = ctx.createGain(); analyser = ctx.createAnalyser(); analyser.fftSize = 512;
+        gainNode.connect(analyser); analyser.connect(ctx.destination);
+      }
+      var go = function () {
+        if (!playing) return;
+        srcNode = ctx.createBufferSource(); srcNode.buffer = decoded; srcNode.loop = true;
+        srcNode.connect(gainNode);
+        gainNode.gain.cancelScheduledValues(ctx.currentTime);
+        gainNode.gain.setValueAtTime(0.0001, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.9, ctx.currentTime + 0.6);
+        srcNode.start(0, offset % decoded.duration);
+        startedAt = ctx.currentTime - offset;
+        lbl.textContent = "Выключить музыку";
+        listen();
+      };
+      if (decoded) { go(); return; }
+      lbl.textContent = "Загружаем музыку…";
+      bufP.then(function (ab) { return ctx.decodeAudioData(ab); }).then(function (d) { decoded = d; go(); }).catch(function () {
+        // файл не открылся: играем вальс из шкатулки
+        fileOk = false; lbl.textContent = "Выключить вальс";
+        nextT = ctx.currentTime + 0.1; timer = setInterval(schedule, 60); schedule();
+      });
+    };
+    var stopFile = function () {
+      cancelAnimationFrame(beatRaf); window.__beat = null;
+      if (srcNode) {
+        offset = (ctx.currentTime - startedAt) % (decoded ? decoded.duration : 1);
+        var n = srcNode; srcNode = null;
+        gainNode.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.12);
+        setTimeout(function () { try { n.stop(); } catch (e) {} }, 500);
+      }
+    };
     btn.addEventListener("click", function () {
       ensureCtx();
       playing = !playing;
       btn.setAttribute("aria-pressed", playing ? "true" : "false");
-      btn.querySelector(".lbl").textContent = fileOk ? (playing ? "Выключить музыку" : "Включить музыку") : (playing ? "Выключить вальс" : "Включить вальс");
       btn.classList.toggle("on", playing);
       ctx.resume();
       if (fileOk) {
-        if (!audio) makeAudio();
-        if (!analyser) {
-          var src = ctx.createMediaElementSource(audio);
-          analyser = ctx.createAnalyser(); analyser.fftSize = 512;
-          src.connect(analyser); analyser.connect(ctx.destination);
-        }
-        if (playing) { audio.play().catch(function () {}); listen(); }
-        else { audio.pause(); cancelAnimationFrame(beatRaf); window.__beat = null; }
+        if (playing) playFile(); else { stopFile(); lbl.textContent = "Включить музыку"; }
         return;
       }
+      lbl.textContent = playing ? "Выключить вальс" : "Включить вальс";
       if (playing) {
         master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(0.55, ctx.currentTime);
         nextT = ctx.currentTime + 0.1; timer = setInterval(schedule, 60); schedule();
