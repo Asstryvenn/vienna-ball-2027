@@ -585,3 +585,107 @@
   -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 30%, transparent 100%);
   mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 30%, transparent 100%);
 }
+
+/* ================= Вопросы и ответы ================= */
+.faq-head { max-width: 46rem; margin: 0 auto 2.6rem; text-align: center; display: grid; gap: 1rem; }
+.faq-head p { margin: 0; color: var(--mist, #aab4cd); font-style: italic; }
+.faq-list { max-width: 50rem; margin: 0 auto; display: grid; gap: 0.9rem; }
+.qa {
+  position: relative;
+  border: 1px solid rgba(184, 138, 59, 0.45);
+  background: rgba(13, 19, 48, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: border-color 0.4s, background-color 0.4s, transform 0.4s;
+}
+.qa:hover { border-color: #d3ac63; transform: translateX(4px); }
+.qa[open] { background: rgba(13, 19, 48, 0.8); border-color: #d3ac63; }
+.qa summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 1.4rem;
+  font-size: 1.12rem;
+  color: #e8ecf4;
+}
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::before {
+  content: "";
+  flex: none;
+  width: 12px;
+  height: 12px;
+  background: #d3ac63;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  transition: transform 0.6s cubic-bezier(0.3, 1.6, 0.5, 1), filter 0.4s;
+}
+.qa[open] summary::before { transform: rotate(180deg) scale(1.4); filter: drop-shadow(0 0 5px #f3dfae); }
+.qa summary::after {
+  content: "+";
+  margin-left: auto;
+  flex: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #d3ac63;
+  transition: transform 0.4s;
+}
+.qa[open] summary::after { transform: rotate(45deg); }
+.qa summary:focus-visible { outline: 2px solid #f3dfae; outline-offset: -2px; }
+.qa-a { padding: 0 1.4rem 1.3rem 3.3rem; color: #c9d0e3; line-height: 1.7; }
+.qa-a p { margin: 0 0 0.7rem; }
+.qa-a p:last-child { margin: 0; }
+.qa-a a { color: #f3dfae; }
+.qa[open] .qa-a { animation: qaOpen 0.55s cubic-bezier(0.2, 0.8, 0.2, 1); }
+@keyframes qaOpen { from { opacity: 0; transform: translateY(-8px); clip-path: inset(0 0 100% 0); } to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); } }
+.faq-list .qa { opacity: 0; transform: translateY(24px); }
+.faq-list.shown .qa { opacity: 1; transform: none; transition: opacity 0.7s, transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2), border-color 0.4s, background-color 0.4s; }
+.faq-list.shown .qa:nth-child(2) { transition-delay: 0.08s; }
+.faq-list.shown .qa:nth-child(3) { transition-delay: 0.16s; }
+.faq-list.shown .qa:nth-child(4) { transition-delay: 0.24s; }
+.faq-list.shown .qa:nth-child(5) { transition-delay: 0.32s; }
+.faq-list.shown .qa:nth-child(6) { transition-delay: 0.4s; }
+.faq-list.shown .qa:nth-child(7) { transition-delay: 0.48s; }
+.faq-list.shown .qa:nth-child(8) { transition-delay: 0.56s; }
+.faq-list.shown .qa:hover { transform: translateX(4px); transition-delay: 0s; }
+@media (max-width: 640px) {
+  .qa summary { padding: 1rem; font-size: 1rem; }
+  .qa-a { padding: 0 1rem 1.1rem 2.6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-list .qa { opacity: 1; transform: none; }
+  .qa[open] .qa-a { animation: none; }
+}
+
+/* ================= переключатель языка ================= */
+.lang {
+  flex: none;
+  display: inline-flex;
+  padding: 2px;
+  margin-left: 1rem;
+  border: 1px solid rgba(211, 172, 99, 0.6);
+  border-radius: 999px;
+  background: rgba(13, 19, 48, 0.5);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  align-self: center;
+}
+.lang span { padding: 0.25rem 0.65rem; border-radius: 999px; color: #aab4cd; transition: background-color 0.3s, color 0.3s; }
+.lang span.on { background: #d3ac63; color: #0d1330; }
+.lang:focus-visible { outline: 2px solid #f3dfae; outline-offset: 2px; }
+@media (max-width: 700px) { .lang { margin-left: 0; font-size: 0.78rem; } .lang span { padding: 0.2rem 0.5rem; } }
+
+/* казахские буквы: если в основном шрифте их нет, берём PT Serif */
+:root { --serif: "Spectral", "PT Serif", Georgia, "Times New Roman", serif; }
+html.lang-kk body { font-family: "Spectral", "PT Serif", Georgia, serif; }
+.faq { background: var(--midnight, #0d1330); color: var(--tulle, #e8ecf4); }
+body { font-family: "Spectral", "PT Serif", Georgia, "Times New Roman", serif; }
+@media (min-width: 701px) {
+  .bar, .top { flex-wrap: nowrap !important; align-items: center !important; }
+  .bar nav, .top nav { gap: 0.3rem 1.15rem !important; margin-left: auto; }
+}
+.mark { white-space: nowrap; }
+@media (min-width: 701px) {
+  .bar nav, .top nav { flex-wrap: nowrap !important; white-space: nowrap; font-size: clamp(0.78rem, 1.05vw, 0.98rem) !important; gap: 0.3rem clamp(0.6rem, 1.1vw, 1.15rem) !important; }
+}

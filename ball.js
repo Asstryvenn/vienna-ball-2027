@@ -5,6 +5,9 @@
 // Пока пусто, песочные часы показывают «Дату объявим скоро».
 var BALL_DATE = "";
 
+// Своя мелодия для кнопки музыки. Если файла нет, играет вальс из музыкальной шкатулки.
+var MUSIC_FILE = "music/theme.mp3";
+
 (function () {
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var root = document.documentElement;
@@ -178,6 +181,17 @@ var BALL_DATE = "";
     else { var wo = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { wl.classList.add("shown"); wo.disconnect(); } }, { rootMargin: "0px 0px -15% 0px" }); wo.observe(wl); }
   }
 
+  /* вопросы появляются по очереди, открыт может быть один */
+  var fl = document.querySelector(".faq-list");
+  if (fl) {
+    if (reduce || !("IntersectionObserver" in window)) fl.classList.add("shown");
+    else { var fo = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { fl.classList.add("shown"); fo.disconnect(); } }, { rootMargin: "0px 0px -10% 0px" }); fo.observe(fl); }
+    fl.addEventListener("toggle", function (e) {
+      if (!e.target.open) return;
+      Array.prototype.forEach.call(fl.querySelectorAll("details[open]"), function (d) { if (d !== e.target) d.open = false; });
+    }, true);
+  }
+
   /* ---------- 5. песочные часы и обратный отсчёт ---------- */
   var soon = document.querySelector(".soon-line");
   var glass = '<svg class="hg" viewBox="0 0 24 36" aria-hidden="true"><path class="hg-frame" d="M3 2h18M3 34h18M5 2c0 9 6 11 6 16S5 25 5 34M19 2c0 9-6 11-6 16s6 7 6 16"/>' +
@@ -327,14 +341,46 @@ var BALL_DATE = "";
       var t = ctx.currentTime;
       ["E5", "G5", "C5", "E5"].forEach(function (n, i) { bell(N[n] * 2, t + i * 0.07, 0.06, 0.9); });
     };
+    var ensureCtx = function () { if (!ctx) { ctx = new AC(); master = ctx.createGain(); master.gain.value = 0.55; master.connect(ctx.destination); } };
+    // своя мелодия: если на сайте лежит файл MUSIC_FILE, кнопка играет его, иначе вальс из шкатулки
+    var audio = null, analyser = null, fileOk = false, beatRaf = 0;
+    fetch(MUSIC_FILE, { method: "HEAD", cache: "no-store" }).then(function (r) {
+      if (!r.ok) return;
+      fileOk = true;
+      btn.querySelector(".lbl").textContent = "Включить музыку";
+    }).catch(function () {});
+    var listen = function () {
+      var data = new Uint8Array(analyser.frequencyBinCount), avg = 0, last = 0;
+      (function tick() {
+        if (!playing) return;
+        analyser.getByteFrequencyData(data);
+        var e = 0; for (var i = 0; i < 12; i++) e += data[i];
+        e /= 12; avg = avg * 0.94 + e * 0.06;
+        var now = performance.now();
+        if (e > avg * 1.18 && e > 60 && now - last > 260) { last = now; window.__beat = { t: now, s: Math.min(1, e / 200) }; }
+        beatRaf = requestAnimationFrame(tick);
+      })();
+    };
     btn.addEventListener("click", function () {
-      if (!ctx) { ctx = new AC(); master = ctx.createGain(); master.gain.value = 0.55; master.connect(ctx.destination); }
+      ensureCtx();
       playing = !playing;
       btn.setAttribute("aria-pressed", playing ? "true" : "false");
-      btn.querySelector(".lbl").textContent = playing ? "Выключить вальс" : "Включить вальс";
+      btn.querySelector(".lbl").textContent = fileOk ? (playing ? "Выключить музыку" : "Включить музыку") : (playing ? "Выключить вальс" : "Включить вальс");
       btn.classList.toggle("on", playing);
+      ctx.resume();
+      if (fileOk) {
+        if (!audio) {
+          audio = new Audio(MUSIC_FILE); audio.loop = true; audio.crossOrigin = "anonymous";
+          var src = ctx.createMediaElementSource(audio);
+          analyser = ctx.createAnalyser(); analyser.fftSize = 512;
+          src.connect(analyser); analyser.connect(ctx.destination);
+        }
+        if (playing) { audio.play().catch(function () {}); listen(); }
+        else { audio.pause(); cancelAnimationFrame(beatRaf); window.__beat = null; }
+        return;
+      }
       if (playing) {
-        ctx.resume(); master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(0.55, ctx.currentTime);
+        master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(0.55, ctx.currentTime);
         nextT = ctx.currentTime + 0.1; timer = setInterval(schedule, 60); schedule();
       } else {
         clearInterval(timer); master.gain.setTargetAtTime(0.0001, ctx.currentTime, 0.15);
@@ -393,6 +439,7 @@ var BALL_DATE = "";
     ["main > .wishes", "performance.jpg", "light"],
     ["main > .partners", "waltz-hero.jpg", "dark"],
     ["main > .tickets", "king-queen.jpg", "dark"],
+    ["main > .faq", "waltz-night.jpg", "dark"],
     ["main > .alumni", "vocal.jpg", "light"],
     ["main > #about", "vocal.jpg", "light"],
     ["main > #card", "performance.jpg", "dark"],
