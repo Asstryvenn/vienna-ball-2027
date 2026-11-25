@@ -165,6 +165,19 @@ var BALL_DATE = "";
     }
   }
 
+  /* фото артистов показываем после полной загрузки, чтобы не было кусков */
+  Array.prototype.forEach.call(document.querySelectorAll(".cutout"), function (im) {
+    var ok = function () { im.classList.add("ready"); };
+    if (im.complete && im.naturalWidth) ok(); else { im.addEventListener("load", ok); im.addEventListener("error", ok); }
+  });
+
+  /* добрые дела раскрываются по очереди */
+  var wl = document.querySelector(".wish-list");
+  if (wl) {
+    if (reduce || !("IntersectionObserver" in window)) wl.classList.add("shown");
+    else { var wo = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { wl.classList.add("shown"); wo.disconnect(); } }, { rootMargin: "0px 0px -15% 0px" }); wo.observe(wl); }
+  }
+
   /* ---------- 5. песочные часы и обратный отсчёт ---------- */
   var soon = document.querySelector(".soon-line");
   var glass = '<svg class="hg" viewBox="0 0 24 36" aria-hidden="true"><path class="hg-frame" d="M3 2h18M3 34h18M5 2c0 9 6 11 6 16S5 25 5 34M19 2c0 9-6 11-6 16s6 7 6 16"/>' +
