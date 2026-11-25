@@ -384,4 +384,110 @@ var BALL_DATE = "";
       requestAnimationFrame(heroLoop);
     })();
   }
+
+  /* ---------- фото бала в заднем фоне разделов ---------- */
+  var bgMap = [
+    ["main > .history", "waltz-night.jpg", "dark"],
+    ["main > .stars", "concert.jpg", "dark"],
+    ["main > .fund", "violin.jpg", "dark"],
+    ["main > .wishes", "performance.jpg", "light"],
+    ["main > .partners", "waltz-hero.jpg", "dark"],
+    ["main > .tickets", "king-queen.jpg", "dark"],
+    ["main > .alumni", "vocal.jpg", "light"],
+    ["main > #about", "vocal.jpg", "light"],
+    ["main > #card", "performance.jpg", "dark"],
+    ["main > #donate", "waltz-night.jpg", "dark"]
+  ];
+  var bgs = [];
+  bgMap.forEach(function (m) {
+    var sec = document.querySelector(m[0]);
+    if (!sec) return;
+    var b = el("div", "bgphoto bg-" + m[2], '<img src="img/' + m[1] + '" alt="" loading="lazy" decoding="async">');
+    b.setAttribute("aria-hidden", "true");
+    sec.insertBefore(b, sec.firstChild);
+    sec.classList.add("has-bgphoto");
+    bgs.push(b);
+  });
+  if (bgs.length && !reduce) {
+    var bt = false;
+    var moveBg = function () {
+      bt = false;
+      bgs.forEach(function (b) {
+        var r = b.parentNode.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > innerHeight) return;
+        var k = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+        b.firstChild.style.translate = "0 " + (k * -70).toFixed(1) + "px";
+      });
+    };
+    addEventListener("scroll", function () { if (!bt) { bt = true; requestAnimationFrame(moveBg); } }, { passive: true });
+    moveBg();
+  }
+  if ("IntersectionObserver" in window) {
+    var bo = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); bo.unobserve(e.target); } }); }, { rootMargin: "0px 0px -10% 0px" });
+    bgs.forEach(function (b) { bo.observe(b); });
+  } else bgs.forEach(function (b) { b.classList.add("in"); });
+
+  /* ---------- история: по линии бежит золотая комета ---------- */
+  var tline = document.querySelector(".timeline");
+  if (tline && !reduce) { var cm = el("span", "comet"); cm.setAttribute("aria-hidden", "true"); tline.appendChild(cm); }
+
+  /* ---------- сцена артистов: вспышки фотокамер ---------- */
+  var starsSec = document.querySelector(".stars");
+  if (starsSec && !reduce) {
+    var starsOn = false;
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { starsOn = es[0].isIntersecting; }).observe(starsSec);
+    (function flash() {
+      if (starsOn && !document.hidden) {
+        var f = el("i", "flash");
+        f.style.left = (8 + Math.random() * 84).toFixed(1) + "%";
+        f.style.top = (25 + Math.random() * 60).toFixed(1) + "%";
+        starsSec.appendChild(f);
+        setTimeout(function () { f.remove(); }, 700);
+      }
+      setTimeout(flash, 500 + Math.random() * 1400);
+    })();
+  }
+
+  /* ---------- партнёры: бегущая строка с именами ---------- */
+  var past = document.querySelector(".past");
+  if (past && past.textContent.indexOf(":") > 0) {
+    var parts = past.textContent.split(":"), label = parts[0].trim();
+    var names = parts.slice(1).join(":").replace(/\.\s*$/, "").split(",").map(function (n) { return n.trim(); });
+    var row = names.map(function (n) { return "<span>" + n + "</span><b>✦</b>"; }).join("");
+    past.innerHTML = '<span class="past-label">' + label + '</span><span class="sr-only">' + names.join(", ") + "</span>" +
+      '<span class="marq" aria-hidden="true"><span class="marq-track">' + row + row + "</span></span>";
+    past.classList.add("marquee");
+  }
+
+  /* ---------- билет: печать «Скоро» падает на билет ---------- */
+  var tmain = document.querySelector(".t-main");
+  if (tmain) {
+    var stamp = el("span", "stamp", "<b>Скоро</b><i>Vienna Ball</i>");
+    stamp.setAttribute("aria-hidden", "true");
+    tmain.appendChild(stamp);
+    if (reduce || !("IntersectionObserver" in window)) stamp.classList.add("down");
+    else { var so = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { setTimeout(function () { stamp.classList.add("down"); }, 500); so.disconnect(); } }, { rootMargin: "0px 0px -25% 0px" }); so.observe(tmain); }
+  }
+
+  /* ---------- выпускникам и пожертвования: небесные фонарики-желания ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll("main > .alumni, main > #donate, main > #about"), function (sec) {
+    if (reduce) return;
+    var box = el("div", "lanterns"); box.setAttribute("aria-hidden", "true");
+    for (var i = 0; i < 9; i++) {
+      var l = el("i");
+      l.style.left = (4 + Math.random() * 92).toFixed(1) + "%";
+      l.style.animationDuration = (14 + Math.random() * 12).toFixed(1) + "s";
+      l.style.animationDelay = (-Math.random() * 24).toFixed(1) + "s";
+      l.style.setProperty("--s", (0.6 + Math.random() * 0.8).toFixed(2));
+      box.appendChild(l);
+    }
+    sec.insertBefore(box, sec.firstChild.nextSibling);
+  });
+
+  /* ---------- программа вечера: золотая нить пробегает по пунктам ---------- */
+  var dc = document.querySelector(".dance-card");
+  if (dc && !reduce) { var nib = el("span", "nib"); nib.setAttribute("aria-hidden", "true"); dc.appendChild(nib); }
+
+  /* ---------- фото коллажа и галереи: блик пробегает при появлении ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".collage figure, .track figure"), function (f) { f.classList.add("glossy"); });
 })();

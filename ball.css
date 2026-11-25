@@ -407,3 +407,181 @@
   .wish { opacity: 1; transform: none; transition: none; }
   .wish::before { animation: none; }
 }
+
+/* ================= фото в фоне разделов ================= */
+.has-bgphoto { position: relative; isolation: isolate; overflow: hidden; }
+.has-bgphoto > .bgphoto {
+  position: absolute !important;
+  inset: 0;
+  z-index: -2 !important;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2.2s ease;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
+}
+.bgphoto img {
+  position: absolute;
+  inset: -90px 0;
+  width: 100%;
+  height: calc(100% + 180px);
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 30%;
+  filter: blur(1.5px) saturate(0.7);
+  animation: kenburns 38s ease-in-out infinite alternate;
+}
+.bg-dark.in { opacity: 0.26; }
+.bg-dark img { mix-blend-mode: luminosity; }
+.bg-light.in { opacity: 0.12; }
+.bg-light img { filter: blur(2px) grayscale(1) sepia(0.5); }
+@keyframes kenburns { from { transform: scale(1.06) translateX(-1.5%); } to { transform: scale(1.18) translateX(1.5%); } }
+
+/* ================= комета на линии истории ================= */
+.comet {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 3px;
+  height: 90px;
+  margin-left: -1px;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, #f3dfae 80%, #fff);
+  border-radius: 2px;
+  filter: drop-shadow(0 0 6px #f3dfae);
+  animation: comet 5.5s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+@keyframes comet { 0% { top: -90px; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+@media (max-width: 900px) { .comet { left: 6px; } }
+
+/* ================= вспышки камер у сцены ================= */
+.flash {
+  position: absolute;
+  z-index: 3;
+  width: 140px;
+  height: 140px;
+  margin: -70px 0 0 -70px;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0 4%, rgba(255, 250, 235, 0.35) 12%, transparent 60%);
+  animation: flash 0.65s ease-out both;
+}
+.flash::before, .flash::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 2px;
+  margin: -1px 0 0 -60px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+}
+.flash::after { transform: rotate(90deg); }
+@keyframes flash { 0% { transform: scale(0.2); opacity: 0; } 15% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.3); opacity: 0; } }
+
+/* ================= бегущая строка партнёров ================= */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.past.marquee { display: grid; gap: 0.9rem; max-width: none; overflow: hidden; }
+.past-label { font-style: italic; opacity: 0.8; }
+.marq {
+  display: block;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marq-track { display: inline-flex; align-items: center; gap: 1.6rem; white-space: nowrap; animation: marq 26s linear infinite; padding: 0.4rem 0; }
+.marq-track span { font-family: "Pinyon Script", "Great Vibes", cursive; font-size: 1.9rem; color: #f3dfae; }
+.marq-track b { color: #b88a3b; font-weight: 400; font-size: 0.9rem; }
+.marq:hover .marq-track { animation-play-state: paused; }
+@keyframes marq { to { transform: translateX(-50%); } }
+
+/* ================= печать на билете ================= */
+.t-main { position: relative; }
+.stamp {
+  position: absolute;
+  right: 8%;
+  top: 14%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border: 3px double rgba(140, 28, 46, 0.75);
+  border-radius: 50%;
+  color: rgba(140, 28, 46, 0.8);
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(2.6) rotate(-40deg);
+  mix-blend-mode: multiply;
+}
+.stamp b { font-size: 1.15rem; letter-spacing: 0.04em; line-height: 1; }
+.stamp i { font-family: "Pinyon Script", cursive; font-style: normal; font-size: 0.95rem; margin-top: -1.6rem; }
+.stamp.down { animation: stamp 0.55s cubic-bezier(0.5, 0, 0.6, 1.6) both; }
+@keyframes stamp { 0% { opacity: 0; transform: scale(2.6) rotate(-40deg); } 70% { opacity: 0.95; transform: scale(0.92) rotate(-14deg); } 100% { opacity: 0.85; transform: scale(1) rotate(-14deg); } }
+
+/* ================= небесные фонарики ================= */
+.has-aura > .lanterns { position: absolute !important; inset: 0; z-index: -1 !important; pointer-events: none; overflow: hidden; }
+.lanterns i {
+  --s: 1;
+  position: absolute;
+  bottom: -60px;
+  width: calc(16px * var(--s));
+  height: calc(22px * var(--s));
+  border-radius: 40% 40% 30% 30%;
+  background: radial-gradient(ellipse at 50% 70%, #fff1c4, #f0a94b 55%, #b8551f);
+  box-shadow: 0 0 calc(18px * var(--s)) rgba(255, 190, 100, 0.7);
+  opacity: 0;
+  animation-name: lantern;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes lantern {
+  0% { transform: translate(0, 0) rotate(-3deg); opacity: 0; }
+  10% { opacity: 0.85; }
+  50% { transform: translate(24px, -55vh) rotate(4deg); }
+  90% { opacity: 0.7; }
+  100% { transform: translate(-10px, -115vh) rotate(-2deg); opacity: 0; }
+}
+.aura-light > .lanterns i { box-shadow: 0 0 calc(14px * var(--s)) rgba(240, 150, 60, 0.6); }
+
+/* ================= программа: золотая нить по пунктам ================= */
+.dance-card { position: relative; }
+.nib {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 18%;
+  background: linear-gradient(180deg, transparent, #d3ac63, transparent);
+  filter: drop-shadow(0 0 5px #f3dfae);
+  animation: nib 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes nib { 0% { top: 0; } 50% { top: 82%; } 100% { top: 0; } }
+
+/* ================= блик по фото ================= */
+.glossy { position: relative; overflow: hidden; }
+.glossy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 248, 225, 0.35) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: gloss 7s ease-in-out infinite;
+}
+.track .glossy:nth-child(3n)::after, .collage .glossy:nth-child(3n)::after { animation-delay: 2.3s; }
+.track .glossy:nth-child(3n+1)::after, .collage .glossy:nth-child(3n+1)::after { animation-delay: 4.6s; }
+@keyframes gloss { 0%, 75% { transform: translateX(-120%); } 95%, 100% { transform: translateX(120%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bgphoto img, .marq-track, .glossy::after, .nib, .comet { animation: none; }
+  .bgphoto { transition: none; }
+  .stamp { opacity: 0.85; transform: rotate(-14deg); }
+}
+.has-bgphoto > .bgphoto.bg-light {
+  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, #000 30%, transparent 100%);
+}
