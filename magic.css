@@ -379,7 +379,7 @@ img.par { translate: 0 var(--py, 0); transition: translate 0.2s linear; }
 
 /* сердечки в сборе */
 .hearts { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
-.fund > :not(.hearts):not(.aura), .donate > :not(.hearts):not(.aura) { position: relative; z-index: 1; }
+.fund > :not(.hearts):not(.aura):not(.divider), .donate > :not(.hearts):not(.aura):not(.divider) { position: relative; z-index: 1; }
 .hearts i {
   position: absolute;
   bottom: -30px;
@@ -402,4 +402,65 @@ img.par { translate: 0 var(--py, 0); transition: translate 0.2s linear; }
   h2.waltz .ch, .stage .artist .cutout, .dance-card li, .collage figure { opacity: 1; transform: none; translate: -50% 0; transition: none; }
   .dance-card li, .collage figure { translate: none; }
   .hearts, .btn::after, .slots li::before, .thread i { animation: none; display: none; }
+}
+
+/* ================= телефон ================= */
+@media (max-width: 700px) {
+  /* меню в одну строку с прокруткой вбок, шапка прилипает и размывает фон */
+  .bar, .top {
+    position: sticky !important;
+    top: 0;
+    z-index: 60;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0.9rem !important;
+    padding: 0.7rem 16px !important;
+    background: rgba(13, 19, 48, 0.82) !important;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(184, 138, 59, 0.25);
+  }
+  .bar .mark, .top .mark { flex: none; font-size: 1.6rem; }
+  .bar nav, .top nav {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 1.1rem !important;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 0.92rem !important;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent);
+    mask-image: linear-gradient(90deg, #000 82%, transparent);
+    padding-right: 1.5rem;
+  }
+  .bar nav::-webkit-scrollbar, .top nav::-webkit-scrollbar { display: none; }
+  .hero { padding-top: 2.4rem !important; min-height: 0 !important; }
+
+  /* сказка спокойнее по размеру */
+  .intro p { font-size: 1.3rem; line-height: 1.5; }
+  .intro .tale::first-letter { font-size: 3em; }
+
+  /* заголовок страницы выпускников в одну-две аккуратные строки */
+  .hero h1 { font-size: clamp(3rem, 14vw, 4.4rem); line-height: 1; }
+  .hero h1 .yr { white-space: nowrap; }
+
+  /* вензель не налезает на заголовки */
+  main > section.has-aura { padding-top: 5rem; }
+  .divider { top: 1.6rem; width: 150px; }
+  .divider svg { width: 150px !important; height: 16px !important; }
+
+  /* сцена артистов: карточка почти на весь экран, видно край следующей */
+  .stage { padding-left: 16px !important; padding-right: 16px !important; scroll-padding: 0 16px; }
+  .artist { width: 72vw !important; height: 104vw !important; max-height: 430px; }
+  .a-name { font-size: 2rem; }
+
+  /* фото в галерее ровные, без дуги */
+  .track figure { transform: none !important; filter: none !important; }
+
+  /* открытка на телефоне */
+  .pc-hint { right: 12px; bottom: 12px; font-size: 0.72rem; }
+
+  /* меньше снега и без кольца */
+  .snow { opacity: 0.55; }
 }

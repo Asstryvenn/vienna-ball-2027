@@ -205,7 +205,7 @@
     var figs = track.children, galVisible = false;
     new IntersectionObserver(function (es) { galVisible = es[0].isIntersecting; }).observe(strip);
     (function arc() {
-      if (galVisible) {
+      if (galVisible && innerWidth > 700) {
         var cx = innerWidth / 2;
         for (var i = 0; i < figs.length; i++) {
           var r = figs[i].getBoundingClientRect();
